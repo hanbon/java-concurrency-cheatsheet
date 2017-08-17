@@ -9,6 +9,26 @@ Java 并发常用代码😎
 - [线程管理 (thread management)](src/tm/README.md "进入子页面")
 
     - 线程的创建、运行与信息的获取
+    
+        - 创建线程的方式有哪些？
+        
+        - 程序能依赖线程的优先级吗？
+        
+        - 线程的状态有哪些？
+        
+        - 哪些操作可以引起线程状态的改变？
+    
+    - 线程的中断与处理
+    
+        - 如何中断线程？
+        
+        - 线程中断后一定会退出吗？
+        
+        - interrupt() 和 isInterrupted() 的区别是什么？
+        
+        - InterruptedException 异常与中断标记有什么联系？
+         
+        - 为什么一般要在捕获 InterruptedException 后再次调用 interrupt() 方法？
 
 - [线程同步基础 (basic thread synchronization)](src/bts/README.md "进入子页面")
 
