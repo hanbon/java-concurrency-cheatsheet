@@ -3,12 +3,12 @@ package tm.tm_01;
 public class Calculator implements Runnable {
 
     /**
-     * 计算 20000 内素数的个数
+     * 计算 2000000 内素数的个数
      */
     @Override
     public void run() {
         long current = 1L;
-        long max = 20000L;
+        long max = 2000000L;
         long numPrimes = 0L;
 
         System.out.printf("Thread '%s': START\n", Thread.currentThread().getName());
@@ -28,7 +28,7 @@ public class Calculator implements Runnable {
         if (number <= 2) {
             return true;
         }
-        for (long i = 2; i < number; i++) {
+        for (long i = 2; i <= Math.sqrt(number); i++) {
             if ((number % i) == 0) {
                 return false;
             }
