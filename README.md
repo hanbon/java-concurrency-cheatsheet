@@ -2,6 +2,7 @@
 
 Java 中关于并发相关知识的整理，持续更新中... 满满的干货，欢迎 Star⭐
 
+Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/detail/octotree/bkhaagjahfmjljalopjnoealnfndnagc "点击跳转") 食用更佳😎
 
 ## 目录导航
 
