@@ -59,6 +59,11 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
          
         - 为什么会在捕获 InterruptedException 后再次调用 `interrupt()` 方法？
 
+    - 等待线程结束和谦让
+    
+        -  `join()` 方法的本质？
+        
+        - `Thread.yeild()`作用？
 
 - [线程同步基础 (basic thread synchronization)](src/bts/README.md "进入子页面")
 
