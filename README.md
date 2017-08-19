@@ -64,6 +64,12 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
         -  `join()` 方法的本质？
         
         - `Thread.yeild()`作用？
+        
+    - 守护进程的创建与运行
+    
+        - 守护进程与普通进程的区别？
+        
+        - 守护进程编程中的注意事项？
 
 - [线程同步基础 (basic thread synchronization)](src/bts/README.md "进入子页面")
 
