@@ -71,6 +71,11 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
         
         - 守护进程编程中的注意事项？
 
+    - 线程中未受检异常的处理
+    
+        - 线程内的未受检异常有哪些处理方式？
+
+
 - [线程同步基础 (basic thread synchronization)](src/bts/README.md "进入子页面")
 
 - [线程同步工具 (thread synchronization utilities)](src/tsu/README.md "进入子页面")
