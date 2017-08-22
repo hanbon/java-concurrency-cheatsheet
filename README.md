@@ -81,9 +81,9 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
         
         - 使用线程局部变量一定能提升性能吗？
         
-        - 线程局部变量为什么可能导致内存泄露？
+        - 为什么线程局部变量可能导致内存泄露？
         
-        - 子线程想要继承父线程的局部变量怎么办？
+        - 子线程想要访问父线程的局部变量怎么办？
 
 
 - [线程同步基础 (basic thread synchronization)](src/bts/README.md "进入子页面")
