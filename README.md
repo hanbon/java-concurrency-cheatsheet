@@ -75,6 +75,16 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
     
         - 线程内的未受检异常有哪些处理方式？
 
+    - 线程中局部变量的使用
+    
+        - 什么是线程局部变量？
+        
+        - 使用线程局部变量一定能提升性能吗？
+        
+        - 线程局部变量为什么可能导致内存泄露？
+        
+        - 子线程想要继承父线程的局部变量怎么办？
+
 
 - [线程同步基础 (basic thread synchronization)](src/bts/README.md "进入子页面")
 
