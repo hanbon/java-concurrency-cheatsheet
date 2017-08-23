@@ -88,6 +88,10 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
     - 线程的分组和未受检异常的处理
     
         - 线程组的基本使用和方法？
+        
+    - 使用工厂类创建线程
+    
+        - 使用工厂类创建线程的好处？
 
 
 - [线程同步基础 (basic thread synchronization)](src/bts/README.md "进入子页面")
