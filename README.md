@@ -84,6 +84,10 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
         - 为什么线程局部变量可能导致内存泄露？
         
         - 子线程想要访问父线程的局部变量怎么办？
+        
+    - 线程的分组和未受检异常的处理
+    
+        - 线程组的基本使用和方法？
 
 
 - [线程同步基础 (basic thread synchronization)](src/bts/README.md "进入子页面")
