@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * SafeParkingStats: ParkingStats 的线程安全版本的实现
  * UnsafeParkingStats: ParkingStats 的非线程安全版本
  */
-public class Main {
+public class Parking {
 
     public static void main(String[] args) {
 
