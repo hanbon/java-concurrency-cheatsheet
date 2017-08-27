@@ -96,6 +96,12 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
 
 - [线程同步基础 (basic thread synchronization)](src/bts/README.md "进入子页面")
 
+    - 使用 synchronized 实现同步
+    
+        - 有几种应用方式？
+        
+        - 实例同步方法和静态同步方法使用了共享变量会有问题吗？
+
 - [线程同步工具 (thread synchronization utilities)](src/tsu/README.md "进入子页面")
 
 - [线程执行器 (thread executors)](src/te/README.md "进入子页面")
