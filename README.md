@@ -101,6 +101,12 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
         - 有几种应用方式？
         
         - 实例同步方法和静态同步方法使用了共享变量会有问题吗？
+        
+    - 在同步代码中使用条件
+    
+        - 使用 synchronized 、 wait() 、 notify() 实现生产者消费者？
+        
+        - wait 循环模式？
 
 - [线程同步工具 (thread synchronization utilities)](src/tsu/README.md "进入子页面")
 
