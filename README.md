@@ -107,6 +107,12 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
         - 使用 synchronized 、 wait() 、 notify() 实现生产者消费者？
         
         - wait 循环模式？
+        
+    - 使用锁实现同步
+    
+        - Lock 相比于 synchronized 的优点？
+        
+        - 重入锁的使用与注意事项？
 
 - [线程同步工具 (thread synchronization utilities)](src/tsu/README.md "进入子页面")
 
