@@ -27,6 +27,8 @@
 
 - [在同步代码中使用条件](#在同步代码中使用条件)
 
+- [使用锁实现同步](#使用锁实现同步)
+
 
 ### [使用synchronized实现同步](bts_01/Parking.java "查看示例")
 
@@ -91,10 +93,47 @@ synchronized(obj) {
 最后一点，并发工具优于 wait 和 notify。
 
 
+### [使用锁实现同步](bts_03/Main.java "查看示例")
 
+Java 提供了同步代码块的另一种机制，一种比 synchronized 关键字更强大和灵活的机制。
 
+这种机制基于 Lock 接口（位于 `java.util.concurrent.locks` 包下）及其实现类（例如：ReentrantLock）。这种机制提供了以下的好处：
 
+- Lock 接口支持更灵活的同步代码块结构。使用 synchronized 时，只能在同一个结构化的方式下来获取和释放控制同步代码块。Lock 接口运行实现更复杂的临界区结构。
 
+- Lock 接口接口在 synchronized 关键字之上提供了额外的特性。其中一个特性是 `tryLock()` 方法的实现，这个方法尝试获取锁的控制权，如果因为其它线程的使用而未果，返回 false。
+使用 synchronized 关键字，当一个线程(A)尝试去执行 synchronized 代码块，如果有另一个线程(B)执行它，线程(A)会被挂起直到线程(B)执行完同步代码块。
+而使用锁，则可以使用 `tryLock()` 方法。这个方法返回一个boolean值表明是否有另一个线程正在执行被这个锁保护的代码块。
+
+- ReadWriteLock 接口允许分离读写操作，支持多个读线程，一个写线程的模式。
+
+- Lock 接口提供了比 synchronized 关键字更好的性能。
+
+这节重点关注 ReentrantLock：
+
+- ReentrantLock 允许递归调用，如其名，重入锁，这样的最大次数限制是 Integer.MAX_VALUE。
+
+- ReentrantLock 的构造器有一个布尔参数 fair。表征了是否是公平锁，默认为非公平锁。主要是针对 `lock()` 方法。
+
+    - 公平锁：线程获取锁的顺序和调用 lock 的顺序一样，FIFO。需要维持有序队列，需要增加阻塞和唤醒的时间开销。不会产生饥饿，但性能相对低下。
+    
+    - 非公平锁：线程获取锁的顺序和调用 lock 的顺序无关，性能更高。
+
+注意事项:
+
+- 如果在临界区使用了 try-catch 块，不要忘了将 `unlock()` 方法放入 finally 部分。
+
+- 如果 `tryLock()` 方法返回了 false, 程序还错误的执行了临界区代码，很可能会出现错误的结果。
+
+- 即便是公平锁，如果通过不带超时时间限制的 `tryLock()` 的方式获取锁的话，它也是不公平的。但是带有超时时间限制的 `tryLock(long timeout, TimeUnit unit)` 方法则不一样，还是会遵循公平或非公平的原则
+
+重要方法：
+
+- `lock()`：获得锁，如果锁被占用，进入等待。
+- `lockInterruptibly()`：获得锁，但优先响应中断。
+- `tryLock()`：尝试获得锁，如果成功，立即放回 true，反之失败返回 false。该方法不会进行等待，立即返回。
+- `tryLock(long time, TimeUnit unit)`：在给定的时间内尝试获得锁。
+- `unLock()`：释放锁。
 
 
 
