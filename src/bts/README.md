@@ -29,6 +29,8 @@
 
 - [使用锁实现同步](#使用锁实现同步)
 
+- [在锁中使用多条件](#在锁中使用多条件)
+
 
 ### [使用synchronized实现同步](bts_01/Parking.java "查看示例")
 
@@ -133,14 +135,38 @@ Java 提供了同步代码块的另一种机制，一种比 synchronized 关键�
 - `lockInterruptibly()`：获得锁，但优先响应中断。
 - `tryLock()`：尝试获得锁，如果成功，立即放回 true，反之失败返回 false。该方法不会进行等待，立即返回。
 - `tryLock(long time, TimeUnit unit)`：在给定的时间内尝试获得锁。
-- `unLock()`：释放锁。
+- `unlock()`：释放锁。
 
 
+### [在锁中使用多条件](bts_04/Main.java "查看示例")
 
+一个锁可能关联一个或多个条件，这些条件通过 Condition 接口声明。
 
+目的是允许线程获取锁并且查看等待的某一个条件是否满足，如果不满足就挂起直到某个线程唤醒它们。
 
+Condition 接口提供了挂起线程和唤醒线程的机制。
 
+如果理解了 `Object.wait()` 和 `Object.notify()` 就很容易理解 Condition 了。前者是配合 synchronized 关键字使用，后者配合 Lock 接口使用，一般的说，就是配合 ReentrantLock 使用。
 
+提供的基本方法：
+
+```
+void await() throws InterruptedException;
+void awaitUninterruptibly();
+long awaitNanos(long nanosTimeout) throws InterruptedException;
+boolean await(long time, TimeUnit unit) throws InterruptedException;
+boolean awaitUntil(Date deadline) throws InterruptedException;
+void signal();
+void signalAll();
+```
+- `await()` 方法会使当前线程等待，同时释放当前锁，当其他线程中使用 `signal()` 或 `signalAll()` 时，线程会重新获得锁并继续执行。
+或者当线程被中断是，也能跳出等待。和 `Object.wait()` 方法很相似。
+
+- `awaitUninterruptibly()` 方法与 `await()` 方法基本相同，但是并不会在等待过程中响应中断。
+
+- `signal()` 方法用户唤醒一个在等待中的线程。和 `Object.notify()` 方法相似。
+
+- `signalAll()` 方法会唤醒所有在等待中的线程。和 `Object.notifyAll()` 方法相似。
 
 
 
