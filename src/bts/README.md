@@ -33,6 +33,8 @@
 
 - [使用读写锁实现同步数据访问](#使用读写锁实现同步数据访问)
 
+- [使用改进的读写锁 StampedLock 实现同步](#使用改进的读写锁StampedLock实现同步)
+
 
 ### [使用synchronized实现同步](bts_01/Parking.java "查看示例")
 
@@ -184,4 +186,64 @@ void signalAll();
 - 读取：没有线程正在做写操作，且没有线程在请求写操作。
 
 - 写入：没有线程正在做读写操作。
+
+
+### [使用改进的读写锁StampedLock实现同步](bts_06/Main.java "查看示例")
+
+StampedLock 类（JDK8中新增）提供了一种特殊的锁，它没有实现 Lock 接口或者 ReentrantLock 接口，但是提供了类似的功能。
+
+首先，值得注意的是这个类的主要目的是作为实现线程安全组件的辅助类，所以它在普通应用中不是很常见。
+
+主要特性：
+
+- 三种锁模式
+
+    - 写：排他锁，当一个线程获取该锁后，其它请求的线程必须等待，当目前没有线程持有读锁或者写锁的时候才可以获取到该锁。
+    
+    - 读：共享锁，在没有线程获取独占写锁的情况下，同时多个线程可以获取该锁，如果已经有线程持有写锁，其他线程请求获取该读锁会被阻塞。
+    
+    - 乐观读：线程没有锁的控制权，其他的线程可能获取了排他锁。当通过乐观读模式拿到一个 stamp，需要使用 `validate()` 方法验证是否可以访问被保护的数据。
+
+- 提供的方法
+
+    - 当通过方法（`readLock()`、`readLockInterruptibly()`、`writeLock()`）去尝试获取锁，如果不能获取锁的控制权，那么当前线程会被挂起直到获取锁。
+    
+        - `readLock()` 和 `readLockInterruptibly()` 会返回一个 read stamp，可以用来解锁或转换模式
+        
+        - `writeLock()`返回一个 write stamp，可以用来解锁或转换模式
+    
+    - 当通过方法（`tryOptimisticRead()`、`tryReadLock()`、`tryWriteLock()`）去尝试获取锁，如果不能获取锁的控制权，会返回一个 long 类型的值表征状态。
+    返回 0 都表示未能获取锁。
+    
+        - `tryOptimisticRead()` 返回非 0 值表示一个有效的乐观读 stamp，获取该 stamp 后在具体操作数据前还需要调用 `validate()` 验证下该 stamp 是否已经不可用，
+        也就是看当调用 `tryOptimisticRead()` 返回 stamp 后到到当前时间是否有其他线程持有了写锁，如果是那么 `validate()` 会返回 0，否则就可以使用该 stamp 版本的锁对数据进行操作。
+
+    - 使用方法 `asReadLock()`、`asWriteLock()`、`asReadWriteLock()` 返回对应锁的视图。都不支持 `newCondition()` 方法。
+     
+    - 使用方法 `tryConvertToReadLock()`、`tryConvertToWriteLock()`、`tryConvertToOptimisticRead()` 尝试转化为其他类型的锁。返回 0 表示失败，否则为相应的 stamp。
+    
+    - 使用方法 `isReadLocked()`、`isWriteLocked()` 来判断当前持有的锁的类型，即是否是共享锁，排他锁。
+    
+    - 使用方法 `unlock()`、`unlockRead()`、`unlockWrite()` 来释放对应的锁。
+    
+    - 使用方法 `getReadLockCount()` 来统计有多少读锁。 
+
+- StampedLock 不是可重入的，如果获取锁之后再调用方法尝试去获取锁，则会导致死锁。
+
+- StampedLock 没有所有权的概念，可以一个线程获取锁后被其他线程释放。
+
+- StampedLock 的调度策略不是一惯地倾向于选择读者而不是写者，或相反。所有 try 方法都是尽最大努力的，不必向任何调度或公平策略确认。
+
+
+
+
+
+
+
+
+
+
+
+
+
 
