@@ -121,6 +121,12 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
     - 使用读写锁实现同步数据访问
     
         - 读写锁的使用？
+        
+    - 使用改进的读写锁 StampedLock 实现同步
+    
+        - JDK8 新增的 StampedLock 提供了哪几种锁模式？
+        
+        - StampedLock 使用的注意事项？
 
 - [线程同步工具 (thread synchronization utilities)](src/tsu/README.md "进入子页面")
 
