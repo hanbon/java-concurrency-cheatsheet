@@ -113,6 +113,10 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
         - Lock 相比于 synchronized 的优点？
         
         - 重入锁的使用与注意事项？
+        
+    - 在锁中使用多条件
+    
+        - Condition 的使用？
 
 - [线程同步工具 (thread synchronization utilities)](src/tsu/README.md "进入子页面")
 
