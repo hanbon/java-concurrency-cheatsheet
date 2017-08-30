@@ -33,7 +33,7 @@
 
 - [使用读写锁实现同步数据访问](#使用读写锁实现同步数据访问)
 
-- [使用改进的读写锁 StampedLock 实现同步](#使用改进的读写锁StampedLock实现同步)
+- [使用改进的读写锁实现同步](#使用改进的读写锁实现同步)
 
 
 ### [使用synchronized实现同步](bts_01/Parking.java "查看示例")
@@ -188,7 +188,7 @@ void signalAll();
 - 写入：没有线程正在做读写操作。
 
 
-### [使用改进的读写锁StampedLock实现同步](bts_06/Main.java "查看示例")
+### [使用改进的读写锁实现同步](bts_06/Main.java "查看示例")
 
 StampedLock 类（JDK8中新增）提供了一种特殊的锁，它没有实现 Lock 接口或者 ReentrantLock 接口，但是提供了类似的功能。
 
