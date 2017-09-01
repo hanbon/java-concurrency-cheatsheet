@@ -152,6 +152,12 @@ Condition 接口提供了挂起线程和唤醒线程的机制。
 
 如果理解了 `Object.wait()` 和 `Object.notify()` 就很容易理解 Condition 了。前者是配合 synchronized 关键字使用，后者配合 Lock 接口使用，一般的说，就是配合 ReentrantLock 使用。
 
+与绑定的所有条件对象都是通过 Lock 接口声明的 `newCondition()` 方法创建的。
+在使用条件的时候，必须获取这个条件绑定的锁，所以带条件的代码的调用都必须在调用 Lock 对象的 `lock()` 与 `unlock()` 方法之间。
+
+当一个线程对象调用了条件对象的 `signal()` 或 `signalAll()` 方法后，一个或多个在该条件上挂起的线程将会被唤醒，但是这并不能保证让它们挂起的条件已经满足，
+所以必须在 while 循环中调用 `await()`，在条件成立之前不能离开循环。
+
 提供的基本方法：
 
 ```
@@ -164,7 +170,7 @@ void signal();
 void signalAll();
 ```
 - `await()` 方法会使当前线程等待，同时释放当前锁，当其他线程中使用 `signal()` 或 `signalAll()` 时，线程会重新获得锁并继续执行。
-或者当线程被中断是，也能跳出等待。和 `Object.wait()` 方法很相似。
+或者当线程被中断时，也能跳出等待。和 `Object.wait()` 方法很相似。
 
 - `awaitUninterruptibly()` 方法与 `await()` 方法基本相同，但是并不会在等待过程中响应中断。
 
