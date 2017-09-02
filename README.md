@@ -130,6 +130,10 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
 
 - [线程同步工具 (thread synchronization utilities)](src/tsu/README.md "进入子页面")
 
+    - 并发的访问一个或多个资源
+    
+        - 使用信号量实现临界区的三个步骤？
+
 - [线程执行器 (thread executors)](src/te/README.md "进入子页面")
 
 - [Fork / Join 框架 (Fork / Join Framework)](src/fjf/README.md "进入子页面")
