@@ -4,6 +4,8 @@
 
 - Semaphore：一种计数器，用来保护一个或多个共享资源的访问。并发编程的基础工具，大多数编程语言都提供了这个机制。
 
+- LockSupport：线程阻塞工具，可以在线程内任意位置让线程阻塞。
+
 - CountDownLatch：允许一个或多个线程一直等待，直到其他线程的操作执行完后再执行。 
 
 - CyclicBarrier：允许多个线程在集合点（common point）处进行相互等待。
@@ -18,6 +20,8 @@
 ### 目录导航
 
 - [并发的访问一个或多个资源](#并发的访问一个或多个资源)
+
+- [线程阻塞工具](#线程阻塞工具)
 
 
 
@@ -56,9 +60,40 @@ boolean	isFair() 是否为公平模式
 ```
 
 
+### [线程阻塞工具](tsu_02/Main.java "查看示例")
 
+LockSupport 是一个用来创建锁和其他同步类的基本线程阻塞原语，可以在线程内任意位置让线程阻塞。
 
+和过时方法 `Thread.suspend()` 相比，它弥补了由于 `resume()` 前发生，导致线程无法继续执行的问题。
 
+和 `Object.wait()` 相比，它不需要先获取某个对象的锁，也不会抛出 InterruptedException 异常。
+
+LockSupport 使用了类似信号量的机制。它为每一个线程准备了一个许可，如果许可可用，那么 `park()` 函数立即返回，并且消费这个许可（也就是将许可变为不可用），
+如果许可不可用，就会阻塞。而 `unpark()` 则使得一个许可变为可用，和信号量不同的是，许可不能累加，永远只有一个许可。
+
+这个特点使得：即使 `unpark()` 操作发生在 `park()` 之前，也可以使得下一次的 `park()` 操作立即返回。
+
+由于许可的存在，调用 `park()` 的线程和另一个试图将其 `unpark()` 的线程之间的竞争将保持活性。
+此外，如果调用者线程被中断，并且支持超时，则 `park()` 将返回。
+`park()` 方法还可以在其他任何时间**毫无理由**地返回，因此通常必须在重新检查返回条件的循环里调用此方法。
+从这个意义上说，`park()` 是**忙等**的一种优化，它不会浪费这么多的时间进行自旋，但是必须将它与 `unpark()` 配对使用才更高效。
+
+三种形式的 `park()` 还各自支持一个 blocker 对象参数。此对象在线程受阻塞时被记录，以允许监视工具和诊断工具确定线程受阻塞的原因。
+
+处于 `park()` 挂起状态的线程不会像 `Thread.suspend()` 那样还给出一个令人费解的 Runnable 状态。
+它会明确的给出一个 WAITING / TIME_WAITING 状态，还会标注一个 parking。
+
+提供的方法如下：
+```
+static Object   getBlocker(Thread t) 返回提供给最近一次尚未解除阻塞的 park 方法调用的 blocker 对象，如果该调用不受阻塞，则返回 null。
+static void	park() 
+static void	park(Object blocker) 
+static void	parkNanos(long nanos) 
+static void	parkNanos(Object blocker, long nanos) 
+static void	parkUntil(long deadline)
+static void	parkUntil(Object blocker, long deadline)
+static void	unpark(Thread thread)
+```
 
 
 
