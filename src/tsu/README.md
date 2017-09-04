@@ -23,6 +23,8 @@
 
 - [线程阻塞工具](#线程阻塞工具)
 
+- [等待多个并发事件的完成](#等待多个并发事件的完成)
+
 
 
 ### [并发的访问一个或多个资源](tsu_01/Main.java "查看示例")
@@ -95,11 +97,27 @@ static void	parkUntil(Object blocker, long deadline)
 static void	unpark(Thread thread)
 ```
 
+### [等待多个并发事件的完成](tsu_03/Main.java "查看示例")
 
+CountDownLatch 类是一个同步辅助类。在完成一组正在其他线程中执行的操作前，它允许线程一直等待。
 
+这个类使用一个整数进行初始化，这个整数就是线程要等待完成操作的数目。
 
+这个整数被初始化后就不能再次初始化或者修改，唯一能改变这个值的方法是 `countDown()` 方法。可以使用 `getCount()` 方法获取内部计数器的值。
 
+当一个线程要等待某些操作先执行完时，需要调用 `await()` 方法，这个方法让线程进入休眠直到等待的所有操作都完成。
 
+另一个 `boolean await(long timeout, TimeUnit unit)` 方法则是线程被休眠直到CountDownLatch 类的内部计数器为 0 （返回 true） 或者指定的时间过期（返回 false）。
+
+当一个操作完成后，它将调用 `countDown()` 方法将 CountDownLatch 类的内部计数器减 1。
+
+当计数器变成 0 的时候，CountDownLatch 类将唤醒所有调用 `await()` 方法而进入休眠的线程。
+
+特点：
+
+- CountDownLatch 机制不是用来保护共享资源或者临界区的，它是用来同步执行多个任务的一个或者多个线程。
+
+- CountDownLatch 只准许进入一次。一旦内部计数器减到 0，再调用 `countDown()` 方法将不起作用。如果还要做类似的同步，就必须创建一个新的 CountDownLatch 对象。
 
 
 
