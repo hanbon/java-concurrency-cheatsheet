@@ -143,6 +143,12 @@ Tips: 项目配合 Chrome 插件 [Octotree](https://chrome.google.com/webstore/d
         - CountDownLatch 的使用？
         
         - CountDownLatch 的特点？
+        
+    - 在集合点同步
+    
+        - CyclicBarrier 的使用？
+        
+        - CyclicBarrier 和 CountDownLatch 的区别？
 
 - [线程执行器 (thread executors)](src/te/README.md "进入子页面")
 
