@@ -25,6 +25,8 @@
 
 - [等待多个并发事件的完成](#等待多个并发事件的完成)
 
+- [在集合点同步](#在集合点同步)
+
 
 
 ### [并发的访问一个或多个资源](tsu_01/Main.java "查看示例")
@@ -119,6 +121,34 @@ CountDownLatch 类是一个同步辅助类。在完成一组正在其他线程�
 
 - CountDownLatch 只准许进入一次。一旦内部计数器减到 0，再调用 `countDown()` 方法将不起作用。如果还要做类似的同步，就必须创建一个新的 CountDownLatch 对象。
 
+
+### [在集合点同步](tsu_04/Main.java "查看示例")
+
+CyclicBarrier 类是一个同步辅助类。它允许两个或多个线程在在某个点进行同步。
+
+CyclicBarrier 类使用一个整数类型进行初始化，这个数是需要在某个点上同步的线程数。
+
+当一个线程到达指定的点后，调用 `await()` 方法后，CyclicBarrier 类将阻塞这个线程并使之休眠直到所有其他线程到达。
+
+当最后一个线程调用 `await()` 方法时，会唤醒所有正在等待的线程，然后这些线程将继续执行。
+
+CyclicBarrier 类还可以在初始化时传入一个附加的 Runnable 对象，当所有线程到达集合点后，CyclicBarrier 类将这个Runnable 对象作为线程执行。
+
+这个特性使得这个类在并行任务上可以媲美分治编程技术（Divide and Conquer Programming Technique）。
+
+同样的，CyclicBarrier 也提供了超时的等待方法 `await(long timeout, TimeUnit unit)`。
+
+使用 `getNumberWaiting()` 方法可以获取阻塞线程的数目，使用 `getParties()` 方法可以获取被同步的任务数。
+
+虽然 CyclicBarrier 类和 CountDownLatch 类有很多共性，但是它们也有一定的差异。
+其中最重要的不同是，CyclicBarrier 对象可以被重置回初始状态，并把它的内部计数器重置成初始化的值。
+
+CyclicBarrier 类的重置是通过 `reset()` 方法来完成的。当重置发生后，在 `await()` 方法中等待的线程将收到一个 BrokenBarrierException 异常。
+
+CyclicBarrier 对象有一种特殊的状态即损坏状态。当很多线程在 `await()` 方法上等待的时候，如果其中的一个线程被中断，这个线程抛出
+InterruptedException 异常，其他等待的线程则将抛出 BrokenBarrierException 异常，于是CyclicBarrier 对象就处于损坏状态了。
+
+可以通过 `isBroken()` 方法判断是否处于损坏状态。
 
 
 
